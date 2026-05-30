@@ -9,7 +9,12 @@ class UnitOfWork:
     async def __aenter__(self):
         return self
 
-    async def __aexit__(self, exc_type: Optional[type], exc_val: Optional[Exception], exc_tb: Optional[Any]) -> None:
+    async def __aexit__(
+        self,
+        exc_type: Optional[type],
+        exc_val: Optional[Exception],
+        exc_tb: Optional[Any],
+    ) -> None:
         if exc_type is None:
             await self.commit()
         else:
@@ -26,7 +31,7 @@ class UnitOfWork:
         await self.session.close()
 
     async def add(self, obj) -> None:
-         self.session.add(obj)
+        self.session.add(obj)
 
     async def delete(self, obj) -> None:
         await self.session.delete(obj)

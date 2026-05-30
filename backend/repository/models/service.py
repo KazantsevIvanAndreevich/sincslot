@@ -4,7 +4,7 @@ from sqlalchemy import String, Integer, ForeignKey
 from sqlalchemy import true
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
-from sqlalchemy  import CheckConstraint
+from sqlalchemy import CheckConstraint
 
 from backend.entity.service import ServiceEntity
 from backend.repository.models.base import Base
@@ -20,10 +20,14 @@ class Service(CreatedAtMixin, UpdatedAtMixin, Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     price: Mapped[int] = mapped_column(
-        Integer, CheckConstraint("price > 0", name="check_price_positive"), nullable=False
+        Integer,
+        CheckConstraint("price > 0", name="check_price_positive"),
+        nullable=False,
     )
     duration: Mapped[int] = mapped_column(
-        Integer, CheckConstraint("duration > 0", name="check_price_positive"), nullable=False
+        Integer,
+        CheckConstraint("duration > 0", name="check_price_positive"),
+        nullable=False,
     )
     description: Mapped[str] = mapped_column(
         String(255),

@@ -36,7 +36,6 @@ class DIContainer:
     container.add_instance(settings.booking_url)
     container.add_instance(settings.calendar_schedule)
 
-
     def get_company_use_cases(self) -> ICompanyUseCase:
         return self.container.resolve(ICompanyUseCase)
 

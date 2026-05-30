@@ -3,16 +3,12 @@ import pytest
 
 @pytest.fixture(scope="function", autouse=True)
 def data_recover_password():
-    return {
-        "email": "SteveJobs123@example.com"
-    }
+    return {"email": "SteveJobs123@example.com"}
 
 
 @pytest.fixture(scope="function", autouse=True)
 def data_recover_password_not_exist_company():
-    return {
-        "email": "qwe@example.com"
-    }
+    return {"email": "qwe@example.com"}
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -39,7 +35,7 @@ def data_register_company():
         "email": "SteveJobs123@example.com",
         "phone": "+79126329303",
         "password": "Pass123!",
-        "repeatPassword": "Pass123!"
+        "repeatPassword": "Pass123!",
     }
 
 
@@ -51,7 +47,7 @@ def data_register_company_with_incorrect_email():
         "email": "incorrect_email.com",
         "phone": "+79126329303",
         "password": "Pass123!",
-        "repeatPassword": "Pass123!"
+        "repeatPassword": "Pass123!",
     }
 
 
@@ -63,7 +59,7 @@ def data_register_company_with_incorrect_password():
         "email": "SteveJobs123@example.com",
         "phone": "+79126329303",
         "password": "1",
-        "repeatPassword": "1"
+        "repeatPassword": "1",
     }
 
 
@@ -75,5 +71,5 @@ def data_register_company_when_password_do_not_match():
         "email": "SteveJobs123@example.com",
         "phone": "+79126329303",
         "password": "Pass123!",
-        "repeatPassword": "Pass124!"
+        "repeatPassword": "Pass124!",
     }

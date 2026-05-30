@@ -139,16 +139,16 @@
   .authCard {
     padding: 2rem 1.5rem;
   }
-  
+
   .authHeader h2 {
     font-size: 1.5rem;
   }
-  
+
   .authLinks {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .authDivider {
     display: none;
   }

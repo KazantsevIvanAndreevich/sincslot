@@ -9,38 +9,41 @@ from backend.repository.unit_of_work.unit_of_work import UnitOfWork
 
 
 class IClientRepository(ABC):
-
     @abstractmethod
     async def save_client(
-            self,
-            session: AsyncSession,
-            name: str,
-            phone: str,
+        self,
+        session: AsyncSession,
+        name: str,
+        phone: str,
     ) -> ClientEntity:
-        raise NotImplemented
+        raise NotImplementedError
 
     @abstractmethod
-    async def get_client_by_id(self, session: AsyncSession, client_id: int) -> ClientEntity | None:
-        raise NotImplemented
+    async def get_client_by_id(
+        self, session: AsyncSession, client_id: int
+    ) -> ClientEntity | None:
+        raise NotImplementedError
 
     @abstractmethod
-    async def get_client_by_name(self, session: AsyncSession, name: str) -> ClientEntity | None:
-        raise NotImplemented
+    async def get_client_by_name(
+        self, session: AsyncSession, name: str
+    ) -> ClientEntity | None:
+        raise NotImplementedError
 
     @abstractmethod
-    async def get_client_by_phone(self, session: AsyncSession, phone: str) -> ClientEntity | None:
-        raise NotImplemented
+    async def get_client_by_phone(
+        self, session: AsyncSession, phone: str
+    ) -> ClientEntity | None:
+        raise NotImplementedError
 
 
 class ClientRepository(IClientRepository):
-
     async def save_client(
-            self,
-            session: AsyncSession,
-            name: str,
-            phone: str,
+        self,
+        session: AsyncSession,
+        name: str,
+        phone: str,
     ) -> ClientEntity:
-
         new_client = Client(
             name=name,
             phone=phone,
@@ -51,8 +54,9 @@ class ClientRepository(IClientRepository):
 
         return new_client.to_client_entity()
 
-    async def get_client_by_id(self, session: AsyncSession, client_id: int) -> ClientEntity | None:
-
+    async def get_client_by_id(
+        self, session: AsyncSession, client_id: int
+    ) -> ClientEntity | None:
         async with UnitOfWork(session) as uow:
             query = select(Client).where(Client.id == client_id)
             client = await uow.execute_query(query)
@@ -62,8 +66,9 @@ class ClientRepository(IClientRepository):
 
         return client_scalar.to_client_entity()
 
-    async def get_client_by_name(self, session: AsyncSession, name: str) -> ClientEntity | None:
-
+    async def get_client_by_name(
+        self, session: AsyncSession, name: str
+    ) -> ClientEntity | None:
         async with UnitOfWork(session) as uow:
             query = select(Client).where(Client.name == name)
             client = await uow.execute_query(query)
@@ -73,8 +78,9 @@ class ClientRepository(IClientRepository):
 
         return client_scalar.to_client_entity()
 
-    async def get_client_by_phone(self, session: AsyncSession, phone: int) -> ClientEntity | None:
-
+    async def get_client_by_phone(
+        self, session: AsyncSession, phone: int
+    ) -> ClientEntity | None:
         async with UnitOfWork(session) as uow:
             query = select(Client).where(Client.phone == phone)
             client = await uow.execute_query(query)

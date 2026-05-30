@@ -25,7 +25,8 @@ def data_create_services() -> list[dict]:
             "price": 120,
             "duration": 30,
             "description": "description",
-        }, {
+        },
+        {
             "name": "my_service3",
             "price": 140,
             "duration": 50,
@@ -36,7 +37,7 @@ def data_create_services() -> list[dict]:
             "price": 1000,
             "duration": 100,
             "description": "description",
-        }
+        },
     ]
 
 

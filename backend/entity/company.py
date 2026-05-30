@@ -3,8 +3,6 @@ from typing import Optional
 from dataclasses import dataclass, field
 from enum import Enum
 
-from sqlalchemy.sql.operators import truediv
-
 
 class DaysOfWeek(Enum):
     Monday = 1

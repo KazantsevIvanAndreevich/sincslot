@@ -33,19 +33,19 @@ const Header = ({ title, showLogout = true }) => {
         <div className={styles.leftSection}>
           <h1 className={styles.title}>{title}</h1>
           <nav className={styles.nav}>
-            <button 
+            <button
               className={styles.navButton}
               onClick={handleGoToSchedule}
             >
               Расписание
             </button>
-            <button 
+            <button
               className={styles.navButton}
               onClick={handleGoToServices}
             >
               Услуги
             </button>
-            <button 
+            <button
               className={styles.navButton}
               onClick={handleGoToSettings}
             >
@@ -53,10 +53,10 @@ const Header = ({ title, showLogout = true }) => {
             </button>
           </nav>
         </div>
-        
+
         {showLogout && (
           <div className={styles.rightSection}>
-            <button 
+            <button
               className={styles.logoutButton}
               onClick={handleLogout}
             >

@@ -29,7 +29,7 @@ const MyBookingsAuthPage = () => {
     }
 
     setIsLoading(true);
-    
+
     // Имитация запроса к API
     setTimeout(() => {
       setIsLoading(false);

@@ -8,10 +8,6 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from backend.repository.models.base import Base
-from backend.repository.models.company import Company
-from backend.repository.models.token import Token
-from backend.repository.models.service import Service
-from backend.repository.models.client import Client
 from backend.core.config import settings
 
 

@@ -89,7 +89,7 @@ const MyBookingsPage = () => {
   useEffect(() => {
     // Проверяем, авторизован ли пользователь (есть ли телефон в sessionStorage)
     const phone = sessionStorage.getItem('userPhone');
-    
+
     if (!phone) {
       // Если телефона нет, используем тестовый номер
       const testPhone = '+7 (999) 123-45-67';
@@ -133,19 +133,19 @@ const MyBookingsPage = () => {
       // Обновляем статус записи
       const updatedBookings = bookings.map(booking =>
         booking.id === selectedBooking.id
-          ? { 
-              ...booking, 
+          ? {
+              ...booking,
               status: 'Отменен',
               cancelledAt: new Date().toISOString().split('T')[0]
             }
           : booking
       );
-      
+
       setBookings(updatedBookings);
       setIsCancelModalOpen(false);
       setIsDetailsModalOpen(false);
       setSelectedBooking(null);
-      
+
       alert('Запись успешно отменена');
     }
   };
@@ -206,7 +206,7 @@ const MyBookingsPage = () => {
       clientPhone: userPhone,
       createdAt: new Date().toISOString().split('T')[0]
     };
-    
+
     setBookings(prev => [newBooking, ...prev]);
     alert('Тестовая запись добавлена!');
   };
