@@ -1,3 +1,4 @@
+# Trigger CI for ДЗ-205
 name: CI Pipeline
 
 on:
