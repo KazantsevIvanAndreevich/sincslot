@@ -22,7 +22,9 @@ class BookingSchedule(BaseModel):
     day: int
     day_of_week: int = Field(alias="dayOfWeek")
     is_work: bool = Field(alias="isWork")
-    time_to_book: Optional[list[list[BookingServiceInterval]]] = Field(default=None, alias="timeToBook")
+    time_to_book: Optional[list[list[BookingServiceInterval]]] = Field(
+        default=None, alias="timeToBook"
+    )
 
     model_config = ConfigDict(
         alias_generator=to_camel,

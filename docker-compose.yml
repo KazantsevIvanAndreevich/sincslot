@@ -14,7 +14,7 @@ services:
       - ./storage:/syncslot/backend/storage
     networks:
       - syncslot_network
-    
+
   frontend:
     build: ./frontend
     container_name: frontend

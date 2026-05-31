@@ -13,6 +13,7 @@ from backend.repository.models.mixins import CreatedAtMixin, UpdatedAtMixin
 if TYPE_CHECKING:
     from .service import Service
 
+
 class Company(CreatedAtMixin, UpdatedAtMixin, Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
@@ -33,11 +34,10 @@ class Company(CreatedAtMixin, UpdatedAtMixin, Base):
         nullable=False,
     )
     work_schedule = mapped_column(JSONB, nullable=True)
-    booking_url:  Mapped[str] = mapped_column(String(255), unique=True, nullable=True)
+    booking_url: Mapped[str] = mapped_column(String(255), unique=True, nullable=True)
     services: Mapped[list["Service"]] = relationship(back_populates="company")
 
     def to_company_entity(self) -> CompanyEntity:
-
         if self.work_schedule:
             result = []
             for ws in self.work_schedule:
@@ -58,7 +58,7 @@ class Company(CreatedAtMixin, UpdatedAtMixin, Base):
             description=self.description,
             address=self.address,
             booking_url=self.booking_url,
-            is_active=self.is_active
+            is_active=self.is_active,
         )
 
     def __str__(self):

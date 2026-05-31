@@ -2,10 +2,10 @@ import time
 from fastapi import status
 
 
-async def test_get_settings_company_by_id(client, auth_header, data_get_settings_update):
-    resp = client.get(
-        "/api/v1/company/settings/", headers=auth_header
-    )
+async def test_get_settings_company_by_id(
+    client, auth_header, data_get_settings_update
+):
+    resp = client.get("/api/v1/company/settings/", headers=auth_header)
 
     assert resp.status_code == status.HTTP_200_OK
     assert resp.json()["name"] == "Tesla"
@@ -29,7 +29,9 @@ async def test_update_settings_company(client, auth_header, data_get_settings_up
     assert resp.json()["slugBookingUrl"] is not None
 
 
-async def test_login_company_after_update_settings(client, data_login_company_after_update_settings):
+async def test_login_company_after_update_settings(
+    client, data_login_company_after_update_settings
+):
     time.sleep(1)
     resp = client.post(
         "/api/v1/company/auth/login", json=data_login_company_after_update_settings

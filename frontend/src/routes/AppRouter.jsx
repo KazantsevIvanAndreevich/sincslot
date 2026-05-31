@@ -4,7 +4,7 @@ import LoginPage from "../pages/AuthPages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../pages/AuthPages/RegisterPage/RegisterPage.jsx";
 import ForgotPasswordPage from "../pages/AuthPages/ForgotPasswordPage/ForgotPasswordPage.jsx";
 import HomePage from "../pages/HomePage/HomePage.jsx";
-import SchedulePage from "../pages/SchedulePage/SchedulePage.jsx"; 
+import SchedulePage from "../pages/SchedulePage/SchedulePage.jsx";
 import ServicesPage from "../pages/ServicesPage/ServicesPage.jsx";
 import ClientBookingPage from "../pages/ClientBookingPage/ClientBookingPage.jsx";
 import BookingDetailsPage from "../pages/BookingDetailsPage/BookingDetailsPage.jsx";
@@ -25,7 +25,7 @@ function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        
+
         {/* Услуги */}
         <Route path="/services" element={<ServicesPage />} />
 

@@ -8,25 +8,30 @@ from backend.api.response.company import (
     CompanyErrorResponse,
 )
 from backend.use_case.company_use_case import ICompanyUseCase
-from backend.api.controllers.company.auth.parse_auth_token import get_current_company_from_token
+from backend.api.controllers.company.auth.parse_auth_token import (
+    get_current_company_from_token,
+)
 from backend.logger.logger import init_logger
 from backend.di_container.di_container import di_container
 from backend.core.db_helper import db_helper
 
-logger = init_logger('company_settings', 'INFO')
+logger = init_logger("company_settings", "INFO")
 
 router = APIRouter()
 
 
-@router.get("/", responses={
-    status.HTTP_200_OK: {"model": CompanySettingsResponse},
-    status.HTTP_400_BAD_REQUEST: {"model": CompanyErrorResponse},
-    status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": CompanyErrorResponse}
-})
+@router.get(
+    "/",
+    responses={
+        status.HTTP_200_OK: {"model": CompanySettingsResponse},
+        status.HTTP_400_BAD_REQUEST: {"model": CompanyErrorResponse},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": CompanyErrorResponse},
+    },
+)
 async def get_settings_company(
-        company=Depends(get_current_company_from_token),
-        company_use_case: ICompanyUseCase = Depends(di_container.get_company_use_cases),
-        session: AsyncSession = Depends(db_helper.session_getter),
+    company=Depends(get_current_company_from_token),
+    company_use_case: ICompanyUseCase = Depends(di_container.get_company_use_cases),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     try:
         company_by_id = await company_use_case.get_company_by_id(session, company.id)
@@ -35,13 +40,13 @@ async def get_settings_company(
             "Error occurred while getting company by id. Company id: %s Error: %s",
             company.id,
             str(ex),
-            exc_info=True
+            exc_info=True,
         )
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content=CompanyErrorResponse(
                 error=f"failed to find a company with id {company.id}"
-            ).model_dump()
+            ).model_dump(),
         )
 
     if company_by_id is None:
@@ -50,7 +55,7 @@ async def get_settings_company(
             status_code=status.HTTP_404_NOT_FOUND,
             content=CompanyErrorResponse(
                 error=f"failed to find a company with id {company.id}"
-            ).model_dump()
+            ).model_dump(),
         )
 
     return JSONResponse(
@@ -62,65 +67,87 @@ async def get_settings_company(
             phone=company_by_id.phone,
             slug_booking_url=company_by_id.booking_url.split("/")[-1],
             description=company_by_id.description,
-        ).model_dump(by_alias=True)
+        ).model_dump(by_alias=True),
     )
 
 
-@router.patch("/", responses={
-    status.HTTP_200_OK: {"model": CompanySettingsResponse},
-    status.HTTP_400_BAD_REQUEST: {"model": CompanyErrorResponse},
-    status.HTTP_409_CONFLICT: {"model": CompanyErrorResponse},
-    status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": CompanyErrorResponse}
-})
-async def update_settings_company(company_settings: CompanyUpdateSettingsRequest,
-                                  company=Depends(get_current_company_from_token),
-                                  company_use_case: ICompanyUseCase = Depends(
-                                      di_container.get_company_use_cases
-                                  ),
-                                  session: AsyncSession = Depends(db_helper.session_getter)):
-    company_by_email = await company_use_case.get_company_by_email(session, company_settings.email)
+@router.patch(
+    "/",
+    responses={
+        status.HTTP_200_OK: {"model": CompanySettingsResponse},
+        status.HTTP_400_BAD_REQUEST: {"model": CompanyErrorResponse},
+        status.HTTP_409_CONFLICT: {"model": CompanyErrorResponse},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": CompanyErrorResponse},
+    },
+)
+async def update_settings_company(
+    company_settings: CompanyUpdateSettingsRequest,
+    company=Depends(get_current_company_from_token),
+    company_use_case: ICompanyUseCase = Depends(di_container.get_company_use_cases),
+    session: AsyncSession = Depends(db_helper.session_getter),
+):
+    company_by_email = await company_use_case.get_company_by_email(
+        session, company_settings.email
+    )
     if company_by_email is not None:
         if company_by_email.id != company.id:
-            logger.warning("Failed to update a company with email %s it is already exist", company_settings.email)
+            logger.warning(
+                "Failed to update a company with email %s it is already exist",
+                company_settings.email,
+            )
             return JSONResponse(
                 status_code=status.HTTP_409_CONFLICT,
                 content=CompanyErrorResponse(
-                    error=f"company with email {company_settings.email} is already exist").model_dump()
+                    error=f"company with email {company_settings.email} is already exist"
+                ).model_dump(),
             )
 
-    company_by_phone = await company_use_case.get_company_by_phone(session, company_settings.phone)
+    company_by_phone = await company_use_case.get_company_by_phone(
+        session, company_settings.phone
+    )
     if company_by_phone is not None:
         if company_by_phone.id != company.id:
-            logger.warning("Failed to update a company with phone %s it is already exist", company_settings.phone)
+            logger.warning(
+                "Failed to update a company with phone %s it is already exist",
+                company_settings.phone,
+            )
             return JSONResponse(
                 status_code=status.HTTP_409_CONFLICT,
                 content=CompanyErrorResponse(
-                    error=f"company with phone {company_settings.phone} is already exist").model_dump()
+                    error=f"company with phone {company_settings.phone} is already exist"
+                ).model_dump(),
             )
 
-    company_by_name = await company_use_case.get_company_by_name(session, company_settings.name)
+    company_by_name = await company_use_case.get_company_by_name(
+        session, company_settings.name
+    )
     if company_by_name is not None:
         if company_by_name.id != company.id:
-            logger.warning("Failed to update a company with name %s it is already exist", company_settings.name)
+            logger.warning(
+                "Failed to update a company with name %s it is already exist",
+                company_settings.name,
+            )
             return JSONResponse(
                 status_code=status.HTTP_409_CONFLICT,
                 content=CompanyErrorResponse(
-                    error=f"user company name {company_settings.name} is already exist").model_dump()
+                    error=f"user company name {company_settings.name} is already exist"
+                ).model_dump(),
             )
 
     company_by_slug = await company_use_case.get_company_by_booking_url_slug(
-        session,
-        company_settings.slug_booking_url
+        session, company_settings.slug_booking_url
     )
     if company_by_slug is not None:
         if company_by_slug.id != company.id:
             logger.warning(
-                "Failed to update a company with booking url slug %s it is already exist", company_settings.name
+                "Failed to update a company with booking url slug %s it is already exist",
+                company_settings.name,
             )
             return JSONResponse(
                 status_code=status.HTTP_409_CONFLICT,
                 content=CompanyErrorResponse(
-                    error=f"user company booking url {company_settings.slug_booking_url} is already exist").model_dump()
+                    error=f"user company booking url {company_settings.slug_booking_url} is already exist"
+                ).model_dump(),
             )
 
     company_to_update = company_settings.model_dump()
@@ -132,19 +159,18 @@ async def update_settings_company(company_settings: CompanyUpdateSettingsRequest
     is_null_pass = new_password is not None and new_repeat_password is not None
 
     if is_empty_pass and is_null_pass:
-
         company_by_id = await company_use_case.get_company_by_id(session, company.id)
 
         is_match_password = await company_use_case.verify_password(
-            company_settings.current_password,
-            company_by_id.password
+            company_settings.current_password, company_by_id.password
         )
 
         if not is_match_password:
             return JSONResponse(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 content=CompanyErrorResponse(
-                    error=f"Incorrect current password. Impossible to set new password").model_dump()
+                    error="Incorrect current password. Impossible to set new password"
+                ).model_dump(),
             )
 
         company_to_update["password"] = company_to_update.get("new_password")
@@ -167,14 +193,14 @@ async def update_settings_company(company_settings: CompanyUpdateSettingsRequest
         logger.error(f"Error occurred while updating company settings: {str(ex)}")
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content=CompanyErrorResponse(error=f"Failed to update company").model_dump()
+            content=CompanyErrorResponse(error="Failed to update company").model_dump(),
         )
 
     if updated_data is None:
-        logger.error(f"Error occurred while updating company settings")
+        logger.error("Error occurred while updating company settings")
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
-            content=CompanyErrorResponse(error=f"Failed to update company").model_dump()
+            content=CompanyErrorResponse(error="Failed to update company").model_dump(),
         )
 
     return JSONResponse(
@@ -186,5 +212,5 @@ async def update_settings_company(company_settings: CompanyUpdateSettingsRequest
             phone=updated_data.phone,
             slug_booking_url=updated_data.booking_url.split("/")[-1],
             description=updated_data.description,
-        ).model_dump(by_alias=True)
+        ).model_dump(by_alias=True),
     )

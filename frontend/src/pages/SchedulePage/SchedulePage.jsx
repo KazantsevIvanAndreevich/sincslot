@@ -166,7 +166,7 @@ const SchedulePage = () => {
   return (
     <div className={styles.pageContainer}>
       <Header title="SyncSlot" />
-      
+
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>Расписание записей</h1>
@@ -179,8 +179,8 @@ const SchedulePage = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th 
-                  onClick={() => handleSort('clientName')} 
+                <th
+                  onClick={() => handleSort('clientName')}
                   className={styles.sortable}
                 >
                   <div className={styles.thContent}>
@@ -190,8 +190,8 @@ const SchedulePage = () => {
                     )}
                   </div>
                 </th>
-                <th 
-                  onClick={() => handleSort('phone')} 
+                <th
+                  onClick={() => handleSort('phone')}
                   className={styles.sortable}
                 >
                   <div className={styles.thContent}>
@@ -201,8 +201,8 @@ const SchedulePage = () => {
                     )}
                   </div>
                 </th>
-                <th 
-                  onClick={() => handleSort('service')} 
+                <th
+                  onClick={() => handleSort('service')}
                   className={styles.sortable}
                 >
                   <div className={styles.thContent}>
@@ -212,8 +212,8 @@ const SchedulePage = () => {
                     )}
                   </div>
                 </th>
-                <th 
-                  onClick={() => handleSort('date')} 
+                <th
+                  onClick={() => handleSort('date')}
                   className={styles.sortable}
                 >
                   <div className={styles.thContent}>
@@ -223,8 +223,8 @@ const SchedulePage = () => {
                     )}
                   </div>
                 </th>
-                <th 
-                  onClick={() => handleSort('time')} 
+                <th
+                  onClick={() => handleSort('time')}
                   className={styles.sortable}
                 >
                   <div className={styles.thContent}>
@@ -234,8 +234,8 @@ const SchedulePage = () => {
                     )}
                   </div>
                 </th>
-                <th 
-                  onClick={() => handleSort('status')} 
+                <th
+                  onClick={() => handleSort('status')}
                   className={styles.sortable}
                 >
                   <div className={styles.thContent}>

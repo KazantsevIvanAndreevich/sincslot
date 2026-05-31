@@ -26,7 +26,9 @@ class Booking(CreatedAtMixin, UpdatedAtMixin, Base):
     client: Mapped["Client"] = relationship(back_populates="bookings")
     time_start: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
     time_end: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True))
-    status: Mapped[str] = mapped_column(default=BookingStatus.pending.value, nullable=False)
+    status: Mapped[str] = mapped_column(
+        default=BookingStatus.pending.value, nullable=False
+    )
     is_active: Mapped[bool] = mapped_column(
         default=True,
         server_default=true(),

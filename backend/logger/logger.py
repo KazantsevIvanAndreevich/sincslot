@@ -2,16 +2,20 @@ import logging
 from typing import Literal
 
 
-def init_logger(name: str, level: int | Literal['DEBUG', 'INFO', 'WARNING', 'ERROR'] = logging.INFO):
+def init_logger(
+    name: str, level: int | Literal["DEBUG", "INFO", "WARNING", "ERROR"] = logging.INFO
+):
     if isinstance(level, str):
         level = getattr(logging, level)
 
     logger = logging.getLogger(name)
     logger.setLevel(level)
     handler = logging.StreamHandler()
-    handler.setFormatter(logging.Formatter(
-        '%(levelname)s - %(name)s - %(asctime)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    ))
+    handler.setFormatter(
+        logging.Formatter(
+            "%(levelname)s - %(name)s - %(asctime)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+    )
     logger.addHandler(handler)
     return logger

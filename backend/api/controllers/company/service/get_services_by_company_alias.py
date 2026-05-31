@@ -27,19 +27,17 @@ router = APIRouter()
     },
 )
 async def get_services_by_company_alias(
-        alias: str,
-        company_use_case: ICompanyUseCase = Depends(di_container.get_company_use_cases),
-        service_use_case: IServiceUseCase = Depends(di_container.get_service_use_case),
-        session: AsyncSession = Depends(db_helper.session_getter),
+    alias: str,
+    company_use_case: ICompanyUseCase = Depends(di_container.get_company_use_cases),
+    service_use_case: IServiceUseCase = Depends(di_container.get_service_use_case),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
     try:
         company = await company_use_case.get_company_by_booking_url_slug(session, alias)
         if company is None or not company.is_active:
             return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
-                content=ServiceErrorResponse(
-                    error="Company not found"
-                ).model_dump(),
+                content=ServiceErrorResponse(error="Company not found").model_dump(),
             )
 
         services = await service_use_case.get_services_by_company_id(
@@ -55,9 +53,7 @@ async def get_services_by_company_alias(
         )
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content=ServiceErrorResponse(
-                error="Failed to get services"
-            ).model_dump(),
+            content=ServiceErrorResponse(error="Failed to get services").model_dump(),
         )
 
     response_services = [
@@ -73,7 +69,7 @@ async def get_services_by_company_alias(
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content=ServiceEntityListResponse(
-            services=response_services
-        ).model_dump(exclude_none=True, by_alias=True),
+        content=ServiceEntityListResponse(services=response_services).model_dump(
+            exclude_none=True, by_alias=True
+        ),
     )

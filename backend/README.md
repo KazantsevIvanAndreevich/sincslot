@@ -1,9 +1,9 @@
 
-## Как запустить 
+## Как запустить
 
 ## Клонировать репозиторий: git clone git@github.com:Al-DozoR/sincslot.git
 ## Выполнить команду: docker-compose up --build
-## Перейти по URL, где будет доступен swagger: http://0.0.0.0:10004/docs# 
+## Перейти по URL, где будет доступен swagger: http://0.0.0.0:10004/docs#
 
 
 ## TODO

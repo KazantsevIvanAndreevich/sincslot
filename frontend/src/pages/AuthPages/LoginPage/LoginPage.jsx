@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const navigate = useNavigate();
   const inputRefs = useRef([]);
-  
+
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
@@ -66,7 +66,7 @@ const Login = () => {
 
     try {
       const result = await authService.login(formData);
-      
+
       // Сохраняем токен
       localStorage.setItem("accessToken", result.accessToken);
 

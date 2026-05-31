@@ -43,7 +43,9 @@ class RunConfig(BaseModel):
 
 
 class TestDatabaseConfig(BaseModel):
-    url: str = "postgresql+asyncpg://pguser_test:pgpassword_test@db_test:5432/syncslot_db_test"
+    url: str = (
+        "postgresql+asyncpg://pguser_test:pgpassword_test@db_test:5432/syncslot_db_test"
+    )
 
 
 class DatabaseConfig(BaseModel):
@@ -93,7 +95,10 @@ class ApiV1Prefix(BaseModel):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=(os.path.join(BASE_DIR, ".env"), os.path.join(BASE_DIR, ".env_example")),
+        env_file=(
+            os.path.join(BASE_DIR, ".env"),
+            os.path.join(BASE_DIR, ".env_example"),
+        ),
         env_file_encoding="utf-8",
         case_sensitive=False,
         env_nested_delimiter="__",

@@ -10,25 +10,30 @@ from backend.api.response.service import (
 )
 
 from backend.logger.logger import init_logger
-from backend.api.controllers.company.auth.parse_auth_token import get_current_company_from_token
+from backend.api.controllers.company.auth.parse_auth_token import (
+    get_current_company_from_token,
+)
 from backend.di_container.di_container import di_container
 from backend.use_case.service_use_case import IServiceUseCase
 from backend.core.db_helper import db_helper
 
-logger = init_logger('create_service', 'INFO')
+logger = init_logger("create_service", "INFO")
 
 router = APIRouter()
 
 
-@router.post("/", responses={
-    status.HTTP_201_CREATED: {"model": ServiceEntityResponse},
-    status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": ServiceErrorResponse}
-})
+@router.post(
+    "/",
+    responses={
+        status.HTTP_201_CREATED: {"model": ServiceEntityResponse},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": ServiceErrorResponse},
+    },
+)
 async def create_service(
-        service: ServiceCreateRequest,
-        company=Depends(get_current_company_from_token),
-        service_use_case: IServiceUseCase = Depends(di_container.get_service_use_case),
-        session: AsyncSession = Depends(db_helper.session_getter),
+    service: ServiceCreateRequest,
+    company=Depends(get_current_company_from_token),
+    service_use_case: IServiceUseCase = Depends(di_container.get_service_use_case),
+    session: AsyncSession = Depends(db_helper.session_getter),
 ) -> JSONResponse:
     try:
         new_service = await service_use_case.save_service(
@@ -43,7 +48,7 @@ async def create_service(
         logger.error("Failed to save service %s", str(ex), exc_info=True)
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content=ServiceErrorResponse(error="Failed to save service").model_dump()
+            content=ServiceErrorResponse(error="Failed to save service").model_dump(),
         )
 
     return JSONResponse(
@@ -55,5 +60,5 @@ async def create_service(
             duration=new_service.duration,
             description=new_service.description,
             company_id=new_service.company_id,
-        ).model_dump(exclude_none=True, by_alias=True)
+        ).model_dump(exclude_none=True, by_alias=True),
     )

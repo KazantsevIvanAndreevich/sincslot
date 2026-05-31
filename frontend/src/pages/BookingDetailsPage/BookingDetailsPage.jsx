@@ -5,7 +5,7 @@ import styles from './BookingDetailsPage.module.css';
 const BookingDetailsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // Данные из предыдущей страницы (из модального окна выбора времени)
   const bookingData = location.state || {
     service: {
@@ -38,7 +38,7 @@ const BookingDetailsPage = () => {
       ...prev,
       [name]: value
     }));
-    
+
     // Очищаем ошибку при вводе
     if (errors[name]) {
       setErrors(prev => ({
@@ -71,7 +71,7 @@ const BookingDetailsPage = () => {
   // Обработчик отправки формы
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       // Переход на страницу подтверждения с данными
       navigate('/booking-confirmation', {
@@ -87,11 +87,11 @@ const BookingDetailsPage = () => {
   // Форматирование даты
   const formatDisplayDate = (dateString) => {
     const date = new Date(dateString);
-    const options = { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     };
     return date.toLocaleDateString('ru-RU', options);
   };
@@ -138,7 +138,7 @@ const BookingDetailsPage = () => {
         {/* Форма для данных клиента */}
         <form onSubmit={handleSubmit} className={styles.bookingForm}>
           <h2 className={styles.formTitle}>Ваши данные</h2>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>
               Имя *

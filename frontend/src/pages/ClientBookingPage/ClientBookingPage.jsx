@@ -52,17 +52,17 @@ const ClientBookingPage = () => {
   const generateAvailableDates = () => {
     const dates = [];
     const today = new Date();
-    
+
     for (let i = 1; i <= 30; i++) {
       const date = new Date();
       date.setDate(today.getDate() + i);
-      
+
       // Делаем доступными примерно 70% дат для демонстрации
       if (Math.random() > 0.3) {
         dates.push(date.toISOString().split('T')[0]);
       }
     }
-    
+
     return dates;
   };
 
@@ -70,16 +70,16 @@ const ClientBookingPage = () => {
   const generateAvailableTimes = (dates) => {
     const times = {};
     const timeSlots = ['09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '18:00'];
-    
+
     dates.forEach(date => {
       // Для каждой даты оставляем случайные 3-5 временных слотов
       const availableSlots = [...timeSlots]
         .sort(() => Math.random() - 0.5)
         .slice(0, 3 + Math.floor(Math.random() * 3));
-      
+
       times[date] = availableSlots.sort();
     });
-    
+
     return times;
   };
 
@@ -107,13 +107,13 @@ const ClientBookingPage = () => {
   const generateCalendar = () => {
     const today = new Date();
     const calendar = [];
-    
+
     // Генерируем 30 дней начиная с завтрашнего дня
     for (let i = 1; i <= 30; i++) {
       const date = new Date();
       date.setDate(today.getDate() + i);
       const dateString = formatDate(date);
-      
+
       calendar.push({
         day: date.getDate(),
         date: dateString,
@@ -123,7 +123,7 @@ const ClientBookingPage = () => {
         year: date.getFullYear()
       });
     }
-    
+
     return calendar;
   };
 
@@ -137,7 +137,7 @@ const ClientBookingPage = () => {
   // Группируем дни по месяцам для отображения
   const groupDaysByMonth = (days) => {
     const groups = {};
-    
+
     days.forEach(day => {
       const key = `${day.year}-${day.month}`;
       if (!groups[key]) {
@@ -149,7 +149,7 @@ const ClientBookingPage = () => {
       }
       groups[key].days.push(day);
     });
-    
+
     return Object.values(groups);
   };
 
@@ -180,12 +180,12 @@ const ClientBookingPage = () => {
 
   const handleContinueToDetails = () => {
     if (selectedService && selectedDate && selectedTime) {
-        navigate('/booking-details', { 
-        state: { 
-            service: selectedService, 
-            date: selectedDate, 
-            time: selectedTime 
-        } 
+        navigate('/booking-details', {
+        state: {
+            service: selectedService,
+            date: selectedDate,
+            time: selectedTime
+        }
         });
     }
     };
@@ -222,7 +222,7 @@ const ClientBookingPage = () => {
           </div>
         </div>
       </header>
-      
+
       <div className={styles.mainContent}>
         <div className={styles.pageHeader}>
           <h2 className={styles.pageTitle}>Запись на услугу</h2>
@@ -282,20 +282,20 @@ const ClientBookingPage = () => {
                   <div className={styles.monthHeader}>
                     <h3>{monthNames[monthGroup.month]} {monthGroup.year}</h3>
                   </div>
-                  
+
                   <div className={styles.calendarGrid}>
                     <div className={styles.weekDays}>
                       {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map(day => (
                         <div key={day} className={styles.weekDay}>{day}</div>
                       ))}
                     </div>
-                    
+
                     <div className={styles.calendarDays}>
                       {/* Пустые ячейки для выравнивания первого дня месяца */}
                       {Array.from({ length: new Date(monthGroup.year, monthGroup.month, 1).getDay() }, (_, i) => (
                         <div key={`empty-${i}`} className={styles.calendarDayEmpty}></div>
                       ))}
-                      
+
                       {monthGroup.days.map((day, dayIndex) => (
                         <div
                           key={dayIndex}

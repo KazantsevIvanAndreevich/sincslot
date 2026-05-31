@@ -20,6 +20,7 @@ class ClientTokensResponse(BaseModel):
         from_attributes=True,
     )
 
+
 class CompanyInfo(BaseModel):
     company_id: int = Field(alias="companyID")
     name: str
@@ -33,6 +34,7 @@ class CompanyInfo(BaseModel):
         from_attributes=True,
     )
 
+
 class ServiceInfo(BaseModel):
     id: int
     name: str
@@ -45,6 +47,7 @@ class ServiceInfo(BaseModel):
         populate_by_name=True,
         from_attributes=True,
     )
+
 
 class Booking(BaseModel):
     id: int
@@ -69,10 +72,3 @@ class ClientBookingsResponse(BaseModel):
         populate_by_name=True,
         from_attributes=True,
     )
-
-
-
-
-
-
-
